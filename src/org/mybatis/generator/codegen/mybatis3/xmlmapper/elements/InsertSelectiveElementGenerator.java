@@ -66,11 +66,15 @@ public class InsertSelectiveElementGenerator extends
                     answer.addElement(getSelectKey(introspectedColumn, gk));
                 }
             }
-        }
-
+		}
+        boolean useInsertIgnore = context.isUseInsertIgnore();
+        System.out.println("INSERT SELECTIVE" + useInsertIgnore);
         StringBuilder sb = new StringBuilder();
-
-        sb.append("insert into "); //$NON-NLS-1$
+        if (useInsertIgnore) {
+        	sb.append("INSERT IGNORE INTO ");
+        } else {
+        	sb.append("insert into "); //$NON-NLS-1$
+        }
         sb.append(introspectedTable.getFullyQualifiedTableNameAtRuntime());
         answer.addElement(new TextElement(sb.toString()));
 
@@ -81,7 +85,7 @@ public class InsertSelectiveElementGenerator extends
         answer.addElement(insertTrimElement);
 
         XmlElement valuesTrimElement = new XmlElement("trim"); //$NON-NLS-1$
-        valuesTrimElement.addAttribute(new Attribute("prefix", "values (")); //$NON-NLS-1$ //$NON-NLS-2$
+        valuesTrimElement.addAttribute(new Attribute("prefix", "VALUES (")); //$NON-NLS-1$ //$NON-NLS-2$
         valuesTrimElement.addAttribute(new Attribute("suffix", ")")); //$NON-NLS-1$ //$NON-NLS-2$
         valuesTrimElement.addAttribute(new Attribute("suffixOverrides", ",")); //$NON-NLS-1$ //$NON-NLS-2$
         answer.addElement(valuesTrimElement);

@@ -109,6 +109,8 @@ public class Context extends PropertyHolder {
     /** The xml formatter. */
     private XmlFormatter xmlFormatter;
     
+    private boolean useInsertIgnore;
+    
     /**
      * Constructs a Context object.
      * 
@@ -451,6 +453,18 @@ public class Context extends PropertyHolder {
         } else if (PropertyRegistry.CONTEXT_AUTO_DELIMIT_KEYWORDS.equals(name)
                 && stringHasValue(value)) {
             autoDelimitKeywords = isTrue(value);
+        } else if (PropertyRegistry.USE_INSERT_IGNORE.equals(name)) {
+        	if (value != null && value.length() > 0) {
+        		if (!value.equalsIgnoreCase(Boolean.FALSE.toString()) && !value.equalsIgnoreCase(Boolean.TRUE.toString())) {
+        			useInsertIgnore = false;
+        		} else if (value.equalsIgnoreCase(Boolean.FALSE.toString())) {
+        			useInsertIgnore = Boolean.FALSE;
+        		} else if (value.equalsIgnoreCase(Boolean.TRUE.toString())) {
+        			useInsertIgnore = Boolean.TRUE;
+        		}
+        	} else {
+        		useInsertIgnore = false;
+        	}
         }
     }
 
@@ -786,4 +800,12 @@ public class Context extends PropertyHolder {
     public void setConnectionFactoryConfiguration(ConnectionFactoryConfiguration connectionFactoryConfiguration) {
         this.connectionFactoryConfiguration = connectionFactoryConfiguration;
     }
+    
+    public boolean isUseInsertIgnore() {
+		return useInsertIgnore;
+	}
+
+	public void setUseInsertIgnore(boolean useInsertIgnore) {
+		this.useInsertIgnore = useInsertIgnore;
+	}
 }
