@@ -131,13 +131,13 @@ public class ExampleWhereClauseElementGenerator extends
 
         XmlElement when = new XmlElement("when"); //$NON-NLS-1$
         when.addAttribute(new Attribute("test", "criterion.noValue")); //$NON-NLS-1$ //$NON-NLS-2$
-        when.addElement(new TextElement("and ${criterion.condition}")); //$NON-NLS-1$
+        when.addElement(new TextElement("AND ${criterion.condition}")); //$NON-NLS-1$
         chooseElement.addElement(when);
 
         when = new XmlElement("when"); //$NON-NLS-1$
         when.addAttribute(new Attribute("test", "criterion.singleValue")); //$NON-NLS-1$ //$NON-NLS-2$
         sb.setLength(0);
-        sb.append("and ${criterion.condition} #{criterion.value"); //$NON-NLS-1$
+        sb.append("AND ${criterion.condition} #{criterion.value"); //$NON-NLS-1$
         if (typeHandled) {
             sb.append(typeHandlerString);
         }
@@ -148,7 +148,7 @@ public class ExampleWhereClauseElementGenerator extends
         when = new XmlElement("when"); //$NON-NLS-1$
         when.addAttribute(new Attribute("test", "criterion.betweenValue")); //$NON-NLS-1$ //$NON-NLS-2$
         sb.setLength(0);
-        sb.append("and ${criterion.condition} #{criterion.value"); //$NON-NLS-1$
+        sb.append("AND ${criterion.condition} #{criterion.value"); //$NON-NLS-1$
         if (typeHandled) {
             sb.append(typeHandlerString);
         }
@@ -162,7 +162,7 @@ public class ExampleWhereClauseElementGenerator extends
 
         when = new XmlElement("when"); //$NON-NLS-1$
         when.addAttribute(new Attribute("test", "criterion.listValue")); //$NON-NLS-1$ //$NON-NLS-2$
-        when.addElement(new TextElement("and ${criterion.condition}")); //$NON-NLS-1$
+        when.addElement(new TextElement("AND ${criterion.condition}")); //$NON-NLS-1$
         XmlElement innerForEach = new XmlElement("foreach"); //$NON-NLS-1$
         innerForEach
                 .addAttribute(new Attribute("collection", "criterion.value")); //$NON-NLS-1$ //$NON-NLS-2$
