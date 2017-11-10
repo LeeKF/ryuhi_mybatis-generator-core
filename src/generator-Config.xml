@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE generatorConfiguration SYSTEM "http://www.ryuhi.com/ryuhi_mybatis-generator-config_1_0_3.dtd">
+<generatorConfiguration>
+	<!--从本注释以下，凡是形如${path/to/file}之类的值，都意味着使用者需根据自己的实际情况填入实际值-->
+	<classPathEntry location="${path/to/file}/mysql-connector-java-5.1.40.jar" />
+	<context id="MysqlTables"  defaultModelType="flat"  targetRuntime="MyBatis3">
+		<!-- 生成的Java文件的编码 -->
+	    <property name="javaFileEncoding" value="UTF-8"/>
+	    <!-- 格式化java代码 -->
+	    <property name="javaFormatter" value="org.mybatis.generator.api.dom.DefaultJavaFormatter"/>
+	    <!-- 格式化XML代码 -->
+	    <property name="xmlFormatter" value="org.mybatis.generator.api.dom.DefaultXmlFormatter"/>
+
+	    <!-- beginningDelimiter和endingDelimiter：指明数据库的用于标记数据库对象名的符号，比如ORACLE就是双引号，MYSQL默认是`反引号； -->
+	    <property name="beginningDelimiter" value="`"/>
+	    <property name="endingDelimiter" value="`"/>
+    	<!-- entity类实现序列化接口 -->
+		<plugin type="org.mybatis.generator.plugins.SerializablePlugin" />
+		<plugin type="org.mybatis.generator.plugins.LombokPlugin">
+             <!-- enable annotations -->
+             <property name="data" value="true"/>
+             <property name="allArgsConstructor" value="true"/>
+             <property name="noArgsConstructor" value="true"/>
+        </plugin>
+		<commentGenerator>
+			<property name="suppressDate" value="true" />
+			<property name="suppressAllComments" value="true" />
+		</commentGenerator>
+		
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
+			connectionURL="${jdbcurl}" userId="${user}"
+			password="${pass}">
+		</jdbcConnection>
+		
+		<javaTypeResolver>
+			<property name="forceBigDecimals" value="true"/>
+		</javaTypeResolver>
+
+		<javaModelGenerator targetPackage="${dao.model}"
+			targetProject="${project/path}" >
+			<property name="enableSubPackages" value="true" />
+			<property name="trimStrings" value="true" />
+		</javaModelGenerator>
+
+		<sqlMapGenerator targetPackage="${dao.mapper.impl}"
+			targetProject="${project/path}">
+			<property name="enableSubPackages" value="true" />
+		</sqlMapGenerator>
+
+		<javaClientGenerator type="XMLMAPPER"
+			targetPackage="${dao.mapper}" targetProject="${project/path}">
+			<property name="enableSubPackages" value="true" />
+		</javaClientGenerator>
+
+		<table tableName="${name}"  delimitAllColumns="true"  delimitIdentifiers="true"/>
+	</context>
+</generatorConfiguration>
