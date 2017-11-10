@@ -49,7 +49,7 @@ public class SelectByExampleWithBLOBsElementGenerator extends
 
         answer.addElement(new TextElement("SELECT")); //$NON-NLS-1$
         XmlElement ifElement = new XmlElement("if"); //$NON-NLS-1$
-        ifElement.addAttribute(new Attribute("test", "DISTINCT")); //$NON-NLS-1$ //$NON-NLS-2$
+        ifElement.addAttribute(new Attribute("test", "distinct")); //$NON-NLS-1$ //$NON-NLS-2$
         ifElement.addElement(new TextElement("DISTINCT")); //$NON-NLS-1$
         answer.addElement(ifElement);
 

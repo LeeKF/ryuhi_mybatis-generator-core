@@ -68,7 +68,6 @@ public class InsertSelectiveElementGenerator extends
             }
 		}
         boolean useInsertIgnore = context.isUseInsertIgnore();
-        System.out.println("INSERT SELECTIVE" + useInsertIgnore);
         StringBuilder sb = new StringBuilder();
         if (useInsertIgnore) {
         	sb.append("INSERT IGNORE INTO ");
