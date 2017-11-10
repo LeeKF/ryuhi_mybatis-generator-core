@@ -280,24 +280,6 @@ public class DatabaseIntrospector {
      */
     private void removeIgnoredColumns(TableConfiguration tc,
             Map<ActualTableName, List<IntrospectedColumn>> columns) {
-        for (Map.Entry<ActualTableName, List<IntrospectedColumn>> entry : columns
-                .entrySet()) {
-            Iterator<IntrospectedColumn> tableColumns = entry.getValue()
-                    .iterator();
-            while (tableColumns.hasNext()) {
-                IntrospectedColumn introspectedColumn = tableColumns.next();
-                if (tc
-                        .isColumnIgnored(introspectedColumn
-                                .getActualColumnName())) {
-                    tableColumns.remove();
-                    if (logger.isDebugEnabled()) {
-                        logger.debug(getString("Tracing.3", //$NON-NLS-1$
-                                introspectedColumn.getActualColumnName(), entry
-                                        .getKey().toString()));
-                    }
-                }
-            }
-        }
     }
 
     /**

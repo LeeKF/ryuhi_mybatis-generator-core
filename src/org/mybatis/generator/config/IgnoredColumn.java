@@ -24,6 +24,9 @@ import java.util.List;
 import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * The Class IgnoredColumn.
  *
@@ -39,6 +42,9 @@ public class IgnoredColumn {
 
     /** The configured delimited column name. */
     protected String configuredDelimitedColumnName;
+    
+    @Getter @Setter
+    protected List<String> ignoreType;
 
     /**
      * Instantiates a new ignored column.

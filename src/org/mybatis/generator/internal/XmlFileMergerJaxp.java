@@ -107,7 +107,7 @@ public class XmlFileMergerJaxp {
         DocumentType newDocType = newDocument.getDoctype();
         DocumentType existingDocType = existingDocument.getDoctype();
 
-        if (!newDocType.getName().equals(existingDocType.getName())) {
+        if ((newDocType != null) && !newDocType.getName().equals(existingDocType.getName())) {
             throw new ShellException(getString("Warning.12", //$NON-NLS-1$
                     existingFileName));
         }

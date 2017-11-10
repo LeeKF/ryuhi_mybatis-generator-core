@@ -1909,4 +1909,12 @@ public abstract class IntrospectedTable {
 	public void setTableType(String tableType) {
 		this.tableType = tableType;
 	}
+
+	public void setBaseColumns(List<IntrospectedColumn> baseColumns) {
+		this.baseColumns = baseColumns;
+	}
+
+	public void setBlobColumns(List<IntrospectedColumn> blobColumns) {
+		this.blobColumns = blobColumns;
+	}
 }

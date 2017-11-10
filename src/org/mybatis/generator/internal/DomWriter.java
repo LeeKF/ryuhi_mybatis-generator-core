@@ -300,6 +300,7 @@ public class DomWriter {
      */
     protected void write(DocumentType node) throws ShellException {
         printWriter.print("<!DOCTYPE "); //$NON-NLS-1$
+        if (node != null) {
         printWriter.print(node.getName());
         String publicId = node.getPublicId();
         String systemId = node.getSystemId();
@@ -321,6 +322,8 @@ public class DomWriter {
             printWriter.print(internalSubset);
             printWriter.print(']');
         }
+        }
+
         printWriter.println('>');
     }
 

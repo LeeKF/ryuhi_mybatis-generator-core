@@ -35,7 +35,9 @@ import static org.mybatis.generator.internal.util.messages.Messages.getString;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.List;
 import java.util.Properties;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.mybatis.generator.config.ColumnOverride;
 import org.mybatis.generator.config.ColumnRenamingRule;
@@ -44,6 +46,7 @@ import org.mybatis.generator.config.Configuration;
 import org.mybatis.generator.config.ConnectionFactoryConfiguration;
 import org.mybatis.generator.config.Context;
 import org.mybatis.generator.config.GeneratedKey;
+import org.mybatis.generator.config.IgnoreTypeEnum;
 import org.mybatis.generator.config.IgnoredColumn;
 import org.mybatis.generator.config.IgnoredColumnException;
 import org.mybatis.generator.config.IgnoredColumnPattern;
@@ -458,9 +461,9 @@ public class MyBatisGeneratorConfigurationParser {
         String column = attributes.getProperty("column"); //$NON-NLS-1$
         String delimitedColumnName = attributes
                 .getProperty("delimitedColumnName"); //$NON-NLS-1$
-
+        List<String> ignoreType = getIgnoreTypeList(attributes);
         IgnoredColumn ic = new IgnoredColumn(column);
-
+        ic.setIgnoreType(ignoreType);
         if (stringHasValue(delimitedColumnName)) {
             ic.setColumnNameDelimited(isTrue(delimitedColumnName));
         }
@@ -798,5 +801,31 @@ public class MyBatisGeneratorConfigurationParser {
         }
     	
         return property;
+    }
+    
+    private List<String> getIgnoreTypeList(Properties attributes) {
+    	List<String> ignoreTypeList = IgnoreTypeEnum.getIgnoreTypeList();
+    	ignoreTypeList.remove(IgnoreTypeEnum.NONE.getValue());
+        List<String> realIgnoreTypelist = new CopyOnWriteArrayList<>();
+        //排除被忽略的类型
+        String exceptType = attributes.getProperty("exceptType", null);
+        if ((exceptType == null) || (exceptType.length() == 0) || (!ignoreTypeList.contains(exceptType.toLowerCase()))) {
+        	exceptType = IgnoreTypeEnum.NONE.getValue();
+        } else {
+        	exceptType = exceptType.toLowerCase();
+        }
+        if ((exceptType == IgnoreTypeEnum.NONE.getValue()) || (exceptType.toLowerCase().contains(IgnoreTypeEnum.NONE.getValue()))) {
+        	return ignoreTypeList;
+        }
+        realIgnoreTypelist.addAll(ignoreTypeList);
+    	for (String str : exceptType.split(",")) {
+			if (str == null || str.length() == 0) {
+				continue;
+			}
+			if (ignoreTypeList.contains(str.toLowerCase())) {
+				realIgnoreTypelist.remove(str.toLowerCase());
+			}
+		}
+    	return realIgnoreTypelist;
     }
 }

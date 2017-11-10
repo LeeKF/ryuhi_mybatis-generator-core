@@ -17,7 +17,12 @@ package org.mybatis.generator.codegen.mybatis3.xmlmapper;
 
 import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import org.mybatis.generator.api.FullyQualifiedTable;
+import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.Document;
 import org.mybatis.generator.api.dom.xml.XmlElement;
@@ -43,6 +48,7 @@ import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.UpdateByExample
 import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.UpdateByPrimaryKeySelectiveElementGenerator;
 import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.UpdateByPrimaryKeyWithBLOBsElementGenerator;
 import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.UpdateByPrimaryKeyWithoutBLOBsElementGenerator;
+import org.mybatis.generator.config.IgnoreTypeEnum;
 
 /**
  * 
@@ -51,6 +57,10 @@ import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.UpdateByPrimary
  */
 public class XMLMapperGenerator extends AbstractXmlGenerator {
 
+	private Map<String, List<String>> ignoreMap;
+	
+	private List<IntrospectedColumn> base = null;
+	
     public XMLMapperGenerator() {
         super();
     }
@@ -93,14 +103,14 @@ public class XMLMapperGenerator extends AbstractXmlGenerator {
     protected void addResultMapWithoutBLOBsElement(XmlElement parentElement) {
         if (introspectedTable.getRules().generateBaseResultMap()) {
             AbstractXmlElementGenerator elementGenerator = new ResultMapWithoutBLOBsElementGenerator(false);
-            initializeAndExecuteGenerator(elementGenerator, parentElement);
+            initializeAndExecuteGenerator(elementGenerator, parentElement,IgnoreTypeEnum.SELECT.getValue());
         }
     }
 
     protected void addResultMapWithBLOBsElement(XmlElement parentElement) {
         if (introspectedTable.getRules().generateResultMapWithBLOBs()) {
             AbstractXmlElementGenerator elementGenerator = new ResultMapWithBLOBsElementGenerator();
-            initializeAndExecuteGenerator(elementGenerator, parentElement);
+            initializeAndExecuteGenerator(elementGenerator, parentElement,IgnoreTypeEnum.SELECT.getValue());
         }
     }
 
@@ -125,14 +135,14 @@ public class XMLMapperGenerator extends AbstractXmlGenerator {
     protected void addBaseColumnListElement(XmlElement parentElement) {
         if (introspectedTable.getRules().generateBaseColumnList()) {
             AbstractXmlElementGenerator elementGenerator = new BaseColumnListElementGenerator();
-            initializeAndExecuteGenerator(elementGenerator, parentElement);
+            initializeAndExecuteGenerator(elementGenerator, parentElement,IgnoreTypeEnum.SELECT.getValue());
         }
     }
 
     protected void addBlobColumnListElement(XmlElement parentElement) {
         if (introspectedTable.getRules().generateBlobColumnList()) {
             AbstractXmlElementGenerator elementGenerator = new BlobColumnListElementGenerator();
-            initializeAndExecuteGenerator(elementGenerator, parentElement);
+            initializeAndExecuteGenerator(elementGenerator, parentElement,IgnoreTypeEnum.SELECT.getValue());
         }
     }
 
@@ -140,70 +150,70 @@ public class XMLMapperGenerator extends AbstractXmlGenerator {
             XmlElement parentElement) {
         if (introspectedTable.getRules().generateSelectByExampleWithoutBLOBs()) {
             AbstractXmlElementGenerator elementGenerator = new SelectByExampleWithoutBLOBsElementGenerator();
-            initializeAndExecuteGenerator(elementGenerator, parentElement);
+            initializeAndExecuteGenerator(elementGenerator, parentElement,IgnoreTypeEnum.SELECT.getValue());
         }
     }
 
     protected void addSelectByExampleWithBLOBsElement(XmlElement parentElement) {
         if (introspectedTable.getRules().generateSelectByExampleWithBLOBs()) {
             AbstractXmlElementGenerator elementGenerator = new SelectByExampleWithBLOBsElementGenerator();
-            initializeAndExecuteGenerator(elementGenerator, parentElement);
+            initializeAndExecuteGenerator(elementGenerator, parentElement,IgnoreTypeEnum.SELECT.getValue());
         }
     }
 
     protected void addSelectByPrimaryKeyElement(XmlElement parentElement) {
         if (introspectedTable.getRules().generateSelectByPrimaryKey()) {
             AbstractXmlElementGenerator elementGenerator = new SelectByPrimaryKeyElementGenerator();
-            initializeAndExecuteGenerator(elementGenerator, parentElement);
+            initializeAndExecuteGenerator(elementGenerator, parentElement,IgnoreTypeEnum.SELECT.getValue());
         }
     }
 
     protected void addDeleteByExampleElement(XmlElement parentElement) {
         if (introspectedTable.getRules().generateDeleteByExample()) {
             AbstractXmlElementGenerator elementGenerator = new DeleteByExampleElementGenerator();
-            initializeAndExecuteGenerator(elementGenerator, parentElement);
+            initializeAndExecuteGenerator(elementGenerator, parentElement,IgnoreTypeEnum.DELETE.getValue());
         }
     }
 
     protected void addDeleteByPrimaryKeyElement(XmlElement parentElement) {
         if (introspectedTable.getRules().generateDeleteByPrimaryKey()) {
             AbstractXmlElementGenerator elementGenerator = new DeleteByPrimaryKeyElementGenerator(false);
-            initializeAndExecuteGenerator(elementGenerator, parentElement);
+            initializeAndExecuteGenerator(elementGenerator, parentElement,IgnoreTypeEnum.DELETE.getValue());
         }
     }
 
     protected void addInsertElement(XmlElement parentElement) {
         if (introspectedTable.getRules().generateInsert()) {
             AbstractXmlElementGenerator elementGenerator = new InsertElementGenerator(false);
-            initializeAndExecuteGenerator(elementGenerator, parentElement);
+            initializeAndExecuteGenerator(elementGenerator, parentElement,IgnoreTypeEnum.INSERT.getValue());
         }
     }
 
     protected void addInsertSelectiveElement(XmlElement parentElement) {
         if (introspectedTable.getRules().generateInsertSelective()) {
             AbstractXmlElementGenerator elementGenerator = new InsertSelectiveElementGenerator();
-            initializeAndExecuteGenerator(elementGenerator, parentElement);
+            initializeAndExecuteGenerator(elementGenerator, parentElement,IgnoreTypeEnum.INSERT.getValue());
         }
     }
 
     protected void addCountByExampleElement(XmlElement parentElement) {
         if (introspectedTable.getRules().generateCountByExample()) {
             AbstractXmlElementGenerator elementGenerator = new CountByExampleElementGenerator();
-            initializeAndExecuteGenerator(elementGenerator, parentElement);
+            initializeAndExecuteGenerator(elementGenerator, parentElement,IgnoreTypeEnum.SELECT.getValue());
         }
     }
 
     protected void addUpdateByExampleSelectiveElement(XmlElement parentElement) {
         if (introspectedTable.getRules().generateUpdateByExampleSelective()) {
             AbstractXmlElementGenerator elementGenerator = new UpdateByExampleSelectiveElementGenerator();
-            initializeAndExecuteGenerator(elementGenerator, parentElement);
+            initializeAndExecuteGenerator(elementGenerator, parentElement,IgnoreTypeEnum.UPDATE.getValue());
         }
     }
 
     protected void addUpdateByExampleWithBLOBsElement(XmlElement parentElement) {
         if (introspectedTable.getRules().generateUpdateByExampleWithBLOBs()) {
             AbstractXmlElementGenerator elementGenerator = new UpdateByExampleWithBLOBsElementGenerator();
-            initializeAndExecuteGenerator(elementGenerator, parentElement);
+            initializeAndExecuteGenerator(elementGenerator, parentElement,IgnoreTypeEnum.UPDATE.getValue());
         }
     }
 
@@ -211,7 +221,7 @@ public class XMLMapperGenerator extends AbstractXmlGenerator {
             XmlElement parentElement) {
         if (introspectedTable.getRules().generateUpdateByExampleWithoutBLOBs()) {
             AbstractXmlElementGenerator elementGenerator = new UpdateByExampleWithoutBLOBsElementGenerator();
-            initializeAndExecuteGenerator(elementGenerator, parentElement);
+            initializeAndExecuteGenerator(elementGenerator, parentElement,IgnoreTypeEnum.UPDATE.getValue());
         }
     }
 
@@ -219,7 +229,7 @@ public class XMLMapperGenerator extends AbstractXmlGenerator {
             XmlElement parentElement) {
         if (introspectedTable.getRules().generateUpdateByPrimaryKeySelective()) {
             AbstractXmlElementGenerator elementGenerator = new UpdateByPrimaryKeySelectiveElementGenerator();
-            initializeAndExecuteGenerator(elementGenerator, parentElement);
+            initializeAndExecuteGenerator(elementGenerator, parentElement,IgnoreTypeEnum.UPDATE.getValue());
         }
     }
 
@@ -227,7 +237,7 @@ public class XMLMapperGenerator extends AbstractXmlGenerator {
             XmlElement parentElement) {
         if (introspectedTable.getRules().generateUpdateByPrimaryKeyWithBLOBs()) {
             AbstractXmlElementGenerator elementGenerator = new UpdateByPrimaryKeyWithBLOBsElementGenerator();
-            initializeAndExecuteGenerator(elementGenerator, parentElement);
+            initializeAndExecuteGenerator(elementGenerator, parentElement,IgnoreTypeEnum.UPDATE.getValue());
         }
     }
 
@@ -236,7 +246,7 @@ public class XMLMapperGenerator extends AbstractXmlGenerator {
         if (introspectedTable.getRules()
                 .generateUpdateByPrimaryKeyWithoutBLOBs()) {
             AbstractXmlElementGenerator elementGenerator = new UpdateByPrimaryKeyWithoutBLOBsElementGenerator(false);
-            initializeAndExecuteGenerator(elementGenerator, parentElement);
+            initializeAndExecuteGenerator(elementGenerator, parentElement,IgnoreTypeEnum.UPDATE.getValue());
         }
     }
 
@@ -253,7 +263,8 @@ public class XMLMapperGenerator extends AbstractXmlGenerator {
     @Override
     public Document getDocument() {
         Document document = new Document(
-                XmlConstants.MYBATIS3_MAPPER_PUBLIC_ID,
+//                XmlConstants.MYBATIS3_MAPPER_PUBLIC_ID,
+                null,
                 XmlConstants.MYBATIS3_MAPPER_SYSTEM_ID);
         document.setRootElement(getSqlMapElement());
 
@@ -263,5 +274,66 @@ public class XMLMapperGenerator extends AbstractXmlGenerator {
         }
 
         return document;
+    }
+    
+    private List<IntrospectedColumn> getOrgBaseColumn() {
+    	return introspectedTable.getBaseColumns();
+    }
+    
+    private List<IntrospectedColumn> processBaseColumn(String type) {
+        List<IntrospectedColumn> result  =  new ArrayList<>();
+        for (IntrospectedColumn ic : this.base) {
+			String icName = ic.getActualColumnName();
+			if(ignoreMap.containsKey(icName)) {
+				List<String> ignoreType = ignoreMap.get(icName);
+				if (ignoreType != null && ignoreType.size() > 0 && ignoreType.contains(type)) {
+				} else {
+					result.add(ic);
+				}
+			} else {
+				result.add(ic);
+			}
+		}
+
+        return result;
+    }
+    
+    private void processBlobColumn() {
+    	List<IntrospectedColumn> blobs = introspectedTable.getBLOBColumns();
+    	IntrospectedColumn ignoreC = null;
+    	for (IntrospectedColumn ic : blobs) {
+    		String icName = ic.getActualColumnName();
+    		if(ignoreMap.containsKey(icName)) {
+    			List<String> ignoreType = ignoreMap.get(icName);
+    			if (ignoreType != null && ignoreType.size() > 0 && ignoreType.contains(IgnoreTypeEnum.SELECT.getValue())) {
+    				ignoreC = ic;
+    				break;
+    			}
+    		}
+    	}
+    	if (ignoreC != null) {
+    		blobs.remove(ignoreC);
+    	}
+    	introspectedTable.setBlobColumns(blobs);
+    }
+    
+    protected void initializeAndExecuteGenerator(
+            AbstractXmlElementGenerator elementGenerator,
+            XmlElement parentElement, String type) {
+        ignoreMap = introspectedTable.getTableConfiguration().getIgnoredColumns();
+        this.base = getOrgBaseColumn();
+        boolean isSame = false;
+        if (ignoreMap != null && ignoreMap.size() > 0) {
+        	List<IntrospectedColumn> base = processBaseColumn(type);
+        	introspectedTable.setBaseColumns(base);
+        	processBlobColumn();
+        	if (this.base.containsAll(base) && (this.base.size() == base.size())) {
+        		isSame = true;
+        	}
+        }
+        initializeAndExecuteGenerator(elementGenerator, parentElement);
+        if (!isSame) {
+        	introspectedTable.setBaseColumns(this.base);
+        }
     }
 }

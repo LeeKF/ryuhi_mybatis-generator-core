@@ -905,4 +905,12 @@ public class TableConfiguration extends PropertyHolder {
     public void setSqlProviderName(String sqlProviderName) {
         this.sqlProviderName = sqlProviderName;
     }
+    
+    public Map<String, List<String>> getIgnoredColumns() {
+    	Map<String, List<String>> list = new HashMap<>();
+        for (IgnoredColumn ic : ignoredColumns.keySet()) {
+			list.put(ic.columnName,ic.getIgnoreType());
+		}
+        return list;
+    }
 }

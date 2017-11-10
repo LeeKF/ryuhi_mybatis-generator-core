@@ -156,12 +156,15 @@ public class ConfigurationParser {
             Element rootNode = document.getDocumentElement();
             DocumentType docType = document.getDoctype();
             if (rootNode.getNodeType() == Node.ELEMENT_NODE
+                    && (docType.getPublicId() == null)) {
+            	config = parseMyBatisGeneratorConfiguration(rootNode);
+            } else if (rootNode.getNodeType() == Node.ELEMENT_NODE
                     && docType.getPublicId().equals(
                             XmlConstants.IBATOR_CONFIG_PUBLIC_ID)) {
                 config = parseIbatorConfiguration(rootNode);
             } else if (rootNode.getNodeType() == Node.ELEMENT_NODE
-                    && docType.getPublicId().equals(
-                            XmlConstants.MYBATIS_GENERATOR_CONFIG_PUBLIC_ID)) {
+                    && ((docType.getPublicId().equals(
+                            XmlConstants.MYBATIS_GENERATOR_CONFIG_PUBLIC_ID)) )) {
                 config = parseMyBatisGeneratorConfiguration(rootNode);
             } else {
                 throw new XMLParserException(getString("RuntimeError.5")); //$NON-NLS-1$
