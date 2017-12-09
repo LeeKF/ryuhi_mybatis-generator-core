@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mapper namespace="com.ryuhi.demo.sstx.dao.mapper.MallResourceEntityMapper">
+  <resultMap id="BaseResultMap" type="com.ryuhi.demo.sstx.dao.model.MallResourceEntity">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="mall_id" jdbcType="BIGINT" property="mallId" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+    <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  AND ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  AND ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  AND ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  AND ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  AND ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  AND ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  AND ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  AND ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, mall_id, url, name, gmt_create, gmt_modified
+  </sql>
+  <select id="selectByExample" parameterType="com.ryuhi.demo.sstx.dao.model.MallResourceEntityExample" resultMap="BaseResultMap">
+    SELECT
+    <if test="distinct">
+      DISTINCT
+    </if>
+    <include refid="Base_Column_List" />
+    FROM mall_resource
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      ORDER BY ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    SELECT 
+    <include refid="Base_Column_List" />
+    FROM mall_resource
+    WHERE id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    DELETE FROM mall_resource
+    WHERE id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ryuhi.demo.sstx.dao.model.MallResourceEntityExample">
+    DELETE FROM mall_resource
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ryuhi.demo.sstx.dao.model.MallResourceEntity">
+    INSERT IGNORE INTO mall_resource (id, mall_id, url, 
+      name)
+    VALUES (#{id,jdbcType=BIGINT}, #{mallId,jdbcType=BIGINT}, #{url,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ryuhi.demo.sstx.dao.model.MallResourceEntity">
+    INSERT IGNORE INTO mall_resource
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="mallId != null">
+        mall_id,
+      </if>
+      <if test="url != null">
+        url,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+    </trim>
+    <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="mallId != null">
+        #{mallId,jdbcType=BIGINT},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ryuhi.demo.sstx.dao.model.MallResourceEntityExample" resultType="java.lang.Long">
+    SELECT COUNT(*) FROM mall_resource
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    UPDATE mall_resource
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.mallId != null">
+        mall_id = #{record.mallId,jdbcType=BIGINT},
+      </if>
+      <if test="record.url != null">
+        url = #{record.url,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    UPDATE mall_resource
+    SET id = #{record.id,jdbcType=BIGINT},
+      mall_id = #{record.mallId,jdbcType=BIGINT},
+      url = #{record.url,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ryuhi.demo.sstx.dao.model.MallResourceEntity">
+    UPDATE mall_resource
+    <set>
+      <if test="mallId != null">
+        mall_id = #{mallId,jdbcType=BIGINT},
+      </if>
+      <if test="url != null">
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+    </set>
+    WHERE id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ryuhi.demo.sstx.dao.model.MallResourceEntity">
+    UPDATE mall_resource
+    SET mall_id = #{mallId,jdbcType=BIGINT},
+      url = #{url,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR}
+    WHERE id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

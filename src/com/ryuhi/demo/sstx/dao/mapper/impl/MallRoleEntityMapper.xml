@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mapper namespace="com.ryuhi.demo.sstx.dao.mapper.MallRoleEntityMapper">
+  <resultMap id="BaseResultMap" type="com.ryuhi.demo.sstx.dao.model.MallRoleEntity">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="mall_id" jdbcType="BIGINT" property="mallId" />
+    <result column="role_name" jdbcType="VARCHAR" property="roleName" />
+    <result column="intro" jdbcType="VARCHAR" property="intro" />
+    <result column="has_full_privilege" jdbcType="BIT" property="hasFullPrivilege" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+    <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  AND ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  AND ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  AND ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  AND ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  AND ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  AND ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  AND ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  AND ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, mall_id, role_name, intro, has_full_privilege, gmt_create, gmt_modified
+  </sql>
+  <select id="selectByExample" parameterType="com.ryuhi.demo.sstx.dao.model.MallRoleEntityExample" resultMap="BaseResultMap">
+    SELECT
+    <if test="distinct">
+      DISTINCT
+    </if>
+    <include refid="Base_Column_List" />
+    FROM mall_role
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      ORDER BY ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    SELECT 
+    <include refid="Base_Column_List" />
+    FROM mall_role
+    WHERE id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    DELETE FROM mall_role
+    WHERE id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ryuhi.demo.sstx.dao.model.MallRoleEntityExample">
+    DELETE FROM mall_role
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ryuhi.demo.sstx.dao.model.MallRoleEntity">
+    INSERT IGNORE INTO mall_role (id, mall_id, role_name, 
+      intro, has_full_privilege)
+    VALUES (#{id,jdbcType=BIGINT}, #{mallId,jdbcType=BIGINT}, #{roleName,jdbcType=VARCHAR}, 
+      #{intro,jdbcType=VARCHAR}, #{hasFullPrivilege,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ryuhi.demo.sstx.dao.model.MallRoleEntity">
+    INSERT IGNORE INTO mall_role
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="mallId != null">
+        mall_id,
+      </if>
+      <if test="roleName != null">
+        role_name,
+      </if>
+      <if test="intro != null">
+        intro,
+      </if>
+      <if test="hasFullPrivilege != null">
+        has_full_privilege,
+      </if>
+    </trim>
+    <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="mallId != null">
+        #{mallId,jdbcType=BIGINT},
+      </if>
+      <if test="roleName != null">
+        #{roleName,jdbcType=VARCHAR},
+      </if>
+      <if test="intro != null">
+        #{intro,jdbcType=VARCHAR},
+      </if>
+      <if test="hasFullPrivilege != null">
+        #{hasFullPrivilege,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ryuhi.demo.sstx.dao.model.MallRoleEntityExample" resultType="java.lang.Long">
+    SELECT COUNT(*) FROM mall_role
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    UPDATE mall_role
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.mallId != null">
+        mall_id = #{record.mallId,jdbcType=BIGINT},
+      </if>
+      <if test="record.roleName != null">
+        role_name = #{record.roleName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.intro != null">
+        intro = #{record.intro,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hasFullPrivilege != null">
+        has_full_privilege = #{record.hasFullPrivilege,jdbcType=BIT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    UPDATE mall_role
+    SET id = #{record.id,jdbcType=BIGINT},
+      mall_id = #{record.mallId,jdbcType=BIGINT},
+      role_name = #{record.roleName,jdbcType=VARCHAR},
+      intro = #{record.intro,jdbcType=VARCHAR},
+      has_full_privilege = #{record.hasFullPrivilege,jdbcType=BIT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ryuhi.demo.sstx.dao.model.MallRoleEntity">
+    UPDATE mall_role
+    <set>
+      <if test="mallId != null">
+        mall_id = #{mallId,jdbcType=BIGINT},
+      </if>
+      <if test="roleName != null">
+        role_name = #{roleName,jdbcType=VARCHAR},
+      </if>
+      <if test="intro != null">
+        intro = #{intro,jdbcType=VARCHAR},
+      </if>
+      <if test="hasFullPrivilege != null">
+        has_full_privilege = #{hasFullPrivilege,jdbcType=BIT},
+      </if>
+    </set>
+    WHERE id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ryuhi.demo.sstx.dao.model.MallRoleEntity">
+    UPDATE mall_role
+    SET mall_id = #{mallId,jdbcType=BIGINT},
+      role_name = #{roleName,jdbcType=VARCHAR},
+      intro = #{intro,jdbcType=VARCHAR},
+      has_full_privilege = #{hasFullPrivilege,jdbcType=BIT}
+    WHERE id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
